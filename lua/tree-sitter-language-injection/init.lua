@@ -51,10 +51,13 @@ local function write(lang, file, content)
 		vim.fn.mkdir(lang_path)
 	end
 
-	local file_handle = io.open(lang_path .. "/" .. file .. ".scm", "w")
-	io.output(file_handle)
-	io.write(content)
-	io.close(file_handle)
+	local file_path = lang_path .. "/" .. file .. ".scm"
+	if vim.fn.filereadable(file_path) == 0 then
+		local file_handle = io.open(file_path, "w")
+		io.output(file_handle)
+		io.write(content)
+		io.close(file_handle)
+	end
 end
 
 local function init()
