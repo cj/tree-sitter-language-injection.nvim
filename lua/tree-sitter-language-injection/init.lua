@@ -12,6 +12,9 @@ local queries = {
 
 ;; STRING SURREALDB INJECTION
 ((string_content) @surrealdb (#match? @surrealdb "^\n*( )*-{2,}( )*[sS][uU][rR][qQ][lL]( )*\n"))
+
+;; STRING HTML INJECTION
+((string_content) @html (#match? @html "^\n*( )*-{2,}( )*[hH][tT][mM][lL]( )*\n"))
 		]],
 	},
 	typescript = {
