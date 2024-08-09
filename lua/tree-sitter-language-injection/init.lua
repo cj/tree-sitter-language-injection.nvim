@@ -8,13 +8,19 @@ local queries = {
 ;; query
 ; extends
 ;; STRING SQL INJECTION
-((string_content) @sql (#match? @sql "^\n*( )*-{2,}( )*[sS][qQ][lL]( )*\n"))
+((string_content) @injection.content
+  (#match? @injection.content "^\n*( )*-{2,}( )*[sS][qQ][lL]( )*\n")
+  (#set! injection.language "sql"))
 
-;; STRING SURREALDB INJECTION
-((string_content) @surrealdb (#match? @surrealdb "^\n*( )*-{2,}( )*[sS][uU][rR][qQ][lL]( )*\n"))
+;; STRING SALDB INJECTION
+((string_content) @injection.content
+  (#match? @injection.content "^\n*( )*-{2,}( )*[sS][uU][rR][qQ][lL]( )*\n")
+  (#set! injection.language "surrealdb"))
 
 ;; STRING HTML INJECTION
-((string_content) @html (#match? @html "^\n*( )*-{2,}( )*[hH][tT][mM][lL]( )*\n"))
+((string_content) @injection.content
+  (#match? @injection.content "^\n*( )*-{2,}( )*[hH][tT][mM][lL]( )*\n")
+  (#set! injection.language "html"))
 		]],
 	},
 	typescript = {
@@ -22,12 +28,14 @@ local queries = {
 ;; query
 ; extends
 ;; STRING SQL INJECTION
-((template_string) @sql (#match? @sql "^`\n*( )*-{2,}( )*[sS][qQ][lL]( )*\n"))
-(((comment) @_comment (#match? @_comment "sql") (lexical_declaration(variable_declarator[(string(string_fragment)@sql)(template_string)@sql]))) @sql)
+((template_string) @injection.content
+  (#match? @injection.content "^`\n*( )*-{2,}( )*[sS][qQ][lL]( )*\n")
+  (#set! injection.language "sql"))
 
 ;; STRING SURREALDB INJECTION
-((template_string) @surrealdb (#match? @surrealdb "^`\n*( )*-{2,}( )*[sS][uU][rR][qQ][lL]( )*\n"))
-(((comment) @_comment (#match? @_comment "surql") (lexical_declaration(variable_declarator[(string(string_fragment)@surrealdb)(template_string)@surrealdb]))) @surrealdb)
+((template_string) @injection.content
+  (#match? @injection.content "^`\n*( )*-{2,}( )*[sS][uU][rR][qQ][lL]( )*\n")
+  (#set! injection.language "surrealdb"))
 		]],
 	},
 	javascript = {
@@ -35,12 +43,14 @@ local queries = {
 ;; query
 ; extends
 ;; STRING SQL INJECTION
-((template_string) @sql (#match? @sql "^`\n*( )*-{2,}( )*[sS][qQ][lL]( )*\n"))
-(((comment) @_comment (#match? @_comment "sql") (lexical_declaration(variable_declarator[(string(string_fragment)@sql)(template_string)@sql]))) @sql)
+((template_string) @injection.content
+  (#match? @injection.content "^`\n*( )*-{2,}( )*[sS][qQ][lL]( )*\n")
+  (#set! injection.language "sql"))
 
 ;; STRING SURREALDB INJECTION
-((template_string) @surrealdb (#match? @surrealdb "^`\n*( )*-{2,}( )*[sS][uU][rR][qQ][lL]( )*\n"))
-(((comment) @_comment (#match? @_comment "surql") (lexical_declaration(variable_declarator[(string(string_fragment)@surrealdb)(template_string)@surrealdb]))) @surrealdb)
+((template_string) @injection.content
+  (#match? @injection.content "^`\n*( )*-{2,}( )*[sS][uU][rR][qQ][lL]( )*\n")
+  (#set! injection.language "surrealdb"))
 		]],
 	},
 }
